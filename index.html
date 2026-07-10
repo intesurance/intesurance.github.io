@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>주식회사 인티슈란스</title>
-  <meta name="description" content="주식회사 인티슈란스" />
+  <meta name="description" content="주식회사 인티슈란스는 사람들의 건강한 삶을 위한 보험대리점입니다." />
+  <meta name="theme-color" content="#ffffff" />
   <style>
     :root {
       --navy: #0f2c4c;
@@ -47,12 +48,15 @@
       font-weight: 800;
       letter-spacing: -0.03em;
       margin-bottom: 20px;
+      text-wrap: balance;
+      word-break: keep-all;
     }
     .hero p {
       font-size: clamp(1rem, 2.2vw, 1.25rem);
       opacity: 0.9;
       max-width: 620px;
       margin: 0 auto 36px;
+      word-break: keep-all;
     }
     footer {
       background: var(--navy);
@@ -61,33 +65,31 @@
       padding: 40px 6vw;
       font-size: 0.9rem;
     }
-    footer a {
+    a, button { touch-action: manipulation; }
+    .policy-open {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
       color: #fff;
       text-decoration: underline;
       text-underline-offset: 3px;
+      cursor: pointer;
+    }
+    .policy-open:hover { color: #cfe0ff; }
+    .footer-info {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      line-height: 1.9;
+      word-break: keep-all;
     }
 
-    .policy-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 20;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .policy-modal:target { display: flex; }
-    .policy-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 44, 76, 0.72);
-    }
     .policy-dialog {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      width: min(920px, 100%);
+      margin: auto;
+      width: min(920px, calc(100vw - 48px));
       max-height: min(84vh, 820px);
+      padding: 0;
+      border: none;
       overflow: hidden;
       background: #fff;
       border-radius: 8px;
@@ -95,6 +97,14 @@
       text-align: left;
       color: var(--text);
     }
+    .policy-dialog[open] {
+      display: flex;
+      flex-direction: column;
+    }
+    .policy-dialog::backdrop {
+      background: rgba(15, 44, 76, 0.72);
+    }
+    body:has(.policy-dialog[open]) { overflow: hidden; }
     .policy-header {
       flex: 0 0 auto;
       display: flex;
@@ -114,16 +124,22 @@
     .policy-close {
       flex: 0 0 auto;
       color: var(--muted);
+      background: #fff;
       border: 1px solid #d7deea;
       border-radius: 999px;
       padding: 6px 12px;
-      text-decoration: none;
       font-size: 0.85rem;
       font-weight: 700;
+      cursor: pointer;
+    }
+    .policy-close:hover {
+      color: var(--navy);
+      border-color: var(--navy);
     }
     .policy-content {
       min-height: 0;
       overflow: auto;
+      overscroll-behavior: contain;
       padding: 24px 36px 36px;
       font-size: 0.94rem;
       line-height: 1.72;
@@ -181,12 +197,9 @@
     }
 
     @media (max-width: 640px) {
-      .policy-modal {
-        align-items: stretch;
-        padding: 12px;
-      }
       .policy-dialog {
-        max-height: calc(100vh - 24px);
+        width: calc(100vw - 24px);
+        max-height: calc(100dvh - 24px);
       }
       .policy-header {
         gap: 10px;
@@ -202,22 +215,24 @@
     <div class="logo">주식회사 인티슈란스</div>
   </header>
 
-  <section class="hero">
+  <main class="hero">
     <h1>주식회사 인티슈란스</h1>
     <p>사람들의 건강한 삶을 위한 보험대리점입니다.</p>
-  </section>
+  </main>
 
   <footer>
-    <p><a href="#privacy-policy">개인정보처리방침</a></p>
+    <p><button type="button" class="policy-open" id="privacy-policy-open">개인정보처리방침</button></p>
+    <p class="footer-info">
+      주식회사 인티슈란스 · 대표: 정희범 · 사업자등록번호: 174-81-04271 · 보험대리점 등록번호: 2026040036<br />
+      서울시 강남구 테헤란로 427, 14층 103호 (삼성동, 위워크타워)
+    </p>
     <p style="margin-top: 16px; opacity: 0.7;">© 2026 Intesurance Co., Ltd. All rights reserved.</p>
   </footer>
 
-  <section class="policy-modal" id="privacy-policy" aria-labelledby="privacy-policy-title">
-    <a class="policy-backdrop" href="#" aria-label="개인정보처리방침 닫기"></a>
-    <article class="policy-dialog" role="dialog" aria-modal="true">
+  <dialog class="policy-dialog" id="privacy-policy" aria-labelledby="privacy-policy-title">
       <div class="policy-header">
         <h2 id="privacy-policy-title">인티슈란스 개인정보 처리방침</h2>
-        <a class="policy-close" href="#">닫기</a>
+        <button type="button" class="policy-close" id="privacy-policy-close">닫기</button>
       </div>
       <div class="policy-content">
         <p>주식회사 인티슈란스(이하 "회사")는 정보주체의 자유와 권리 보호를 위해 「개인정보 보호법」, 「신용정보의 이용 및 보호에 관한 법률」 및 관련 법령이 정한 바를 준수하여, 적법하게 개인정보를 처리하고 안전하게 관리하고 있습니다. 이에 ｢개인정보 보호법｣ 제30조에 따라 정보주체에게 개인정보의 처리와 보호에 관한 절차 및 기준을 안내하고, 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.</p>
@@ -514,7 +529,16 @@
           <li class="policy-effective-date">이 개인정보 처리방침은 2026. 7. 10.부터 적용됩니다.</li>
         </ol>
       </div>
-    </article>
-  </section>
+  </dialog>
+
+  <script>
+    const policyDialog = document.getElementById('privacy-policy');
+    document.getElementById('privacy-policy-open').addEventListener('click', () => policyDialog.showModal());
+    document.getElementById('privacy-policy-close').addEventListener('click', () => policyDialog.close());
+    policyDialog.addEventListener('click', (e) => {
+      if (e.target === policyDialog) policyDialog.close();
+    });
+    if (location.hash === '#privacy-policy') policyDialog.showModal();
+  </script>
 </body>
 </html>
